@@ -5,8 +5,13 @@ from django.db.models import ExpressionWrapper, F, FloatField
 class MetricManager(models.Manager):
     def get_queryset(self):
         q = super(MetricManager, self).get_queryset()
-        annotated_fields = {'cpi': ExpressionWrapper(F('spend') / F('installs'), output_field=FloatField())}
+        annotated_fields = self.get_default_annotated_fields()
         return q.annotate(**annotated_fields)
+
+    @staticmethod
+    def get_default_annotated_fields():
+        return {'cpi': ExpressionWrapper(F('spend') / F('installs'),
+                                         output_field=FloatField())}
 
 
 class Metric(models.Model):

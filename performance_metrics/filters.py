@@ -36,7 +36,6 @@ class MetricFilter(FilterSet):
         if matching:
             annotated_fields = {aggr_field: Sum(aggr_field)
                                 for aggr_field in aggregated_fields}
-            annotated_fields['cpi'] = ExpressionWrapper(F('spend') / F('installs'),
-                                                        output_field=FloatField())
-            return queryset.values(*matching).annotate(**annotated_fields)
+            annotated_fields.update(Metric.objects.get_default_annotated_fields())
+            queryset = queryset.values(*matching).annotate(**annotated_fields)
         return queryset
