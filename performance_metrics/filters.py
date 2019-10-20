@@ -1,5 +1,5 @@
-from django.db.models import Sum, ExpressionWrapper, F, FloatField
-from django_filters.rest_framework import DateFromToRangeFilter, CharFilter, FilterSet, DateFilter
+from django.db.models import Sum
+from django_filters.rest_framework import CharFilter, FilterSet, DateFilter
 
 from .models import Metric
 
